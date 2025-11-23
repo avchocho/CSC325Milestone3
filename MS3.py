@@ -2,28 +2,24 @@
 
 import pandas as pd
 import plotly.express as px
-from google.cloud.sql.connector import connector
 import os
+import pymysql
 
 # -----------------------------
-# 1. Set Google Cloud credentials (update with your path)
-# -----------------------------
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "path_to_your_service_account.json"
-
-# -----------------------------
-# 2. Connect to Cloud SQL (update with your instance details)
+# 1. Connect to AWS
 # -----------------------------
 def make_connection():
-    return connector.connect(
-        "your-instance-connection-name",  # e.g., project:region:instance
-        "pymysql",
-        user="your-username",
-        password="your-password",
-        database="your-database"
+    return pymysql.connect(
+        host="csc325termproject-db.cjww46guy0g5.us-east-2.rds.amazonaws.com",
+        port=3306,                                       # MySQL default port
+        user="admin",
+        password="Milestone2",
+        database="disneyplus_db" 
     )
 
+
 # -----------------------------
-# 3. Fetch data from MySQL
+# 2. Fetch data from MySQL
 # -----------------------------
 conn = make_connection()
 query = "SELECT Name, Continent, Population, LifeExpectancy, GNP FROM country"
@@ -31,7 +27,7 @@ df = pd.read_sql(query, conn)
 conn.close()
 
 # -----------------------------
-# 4. Plotly Express Charts
+# 3. Plotly Express Charts
 # -----------------------------
 
 # 1. Scatter Plot: GNP vs Life Expectancy

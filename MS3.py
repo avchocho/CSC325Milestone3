@@ -58,16 +58,23 @@ df3 = pd.read_sql(query3, conn)
 # 3. Plotly Express Charts
 # -----------------------------
 
-# 1. Scatter Plot: GNP vs Life Expectancy
-fig1 = px.scatter(
-    df,
-    x='GNP',
-    y='LifeExpectancy',
-    hover_data=['Name', 'Continent'],
-    title='GNP vs Life Expectancy',
-    color='Continent'
+# 1. Line Chart: Growth of Disney Content Over Time 
+fig1 = px.line(
+    df1,
+    x='Release Year',
+    y='Number of Titles',
+    title='Growth of Disney Content Over Time',
+    markers=True
 )
+
+fig1.update_layout(
+    height=700,     
+    width=1000,
+    title_x=0.5      
+)
+
 fig1.show()
+
 
 # 2. Bar Chart: Population by Continent
 continent_pop = df.groupby('Continent')['Population'].sum().reset_index()

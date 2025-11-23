@@ -22,9 +22,37 @@ def make_connection():
 # 2. Fetch data from MySQL
 # -----------------------------
 conn = make_connection()
-query = "SELECT Name, Continent, Population, LifeExpectancy, GNP FROM country"
-df = pd.read_sql(query, conn)
-conn.close()
+
+# V2 line chart 
+query1 = """
+SELECT release_year as 'Release Year', COUNT(*) AS 'Number of Titles' 
+FROM `Show` 
+GROUP BY release_year 
+ORDER BY release_year;
+"""
+df1 = pd.read_sql(query1, conn)
+
+# V2 bar chart
+query2 = """
+SELECT gname AS Genre, show_type AS 'Title Type', COUNT(*) AS 'Number of Titles'
+FROM `Show` s, ShowGenre sg, Genre g
+WHERE s.show_id = sg.showID AND g.id = sg.genre_id
+GROUP BY gname, show_type
+ORDER BY COUNT(*) DESC
+"""
+df2 = pd.read_sql(query2, conn)
+
+# V3 pie chart
+query3 = """
+SELECT show_type AS Type, COUNT(*) AS 'Total'
+FROM `Show` 
+GROUP BY show_type;
+"""
+df3 = pd.read_sql(query3, conn)
+
+# V4 horizontal bar chart 
+
+# V5 bar chart
 
 # -----------------------------
 # 3. Plotly Express Charts

@@ -76,14 +76,30 @@ fig1.update_layout(
 fig1.show()
 
 
-# 2. Bar Chart: Population by Continent
-continent_pop = df.groupby('Continent')['Population'].sum().reset_index()
+# 2. Bar Chart: Top 10 Popular Genres 
+# get the total titles per genre
+genre_totals = df2.groupby('Genre')['Number of Titles'].sum().sort_values(ascending=False)
+
+# filter to only the top 10 genres
+top10_genres = genre_totals.head(10).index
+
+# filter the df to only the top 10
+df2_top10 = df2[df2['Genre'].isin(top10_genres)]
+
 fig2 = px.bar(
-    continent_pop,
-    x='Continent',
-    y='Population',
-    title='Population by Continent',
-    color='Continent'
+    df2_top10,
+    x='Genre',
+    y='Number of Titles',
+    color='Title Type',
+    barmode='group',
+    title='Top 10 Most Popular Genres on Disney+'
+)
+fig2.update_layout(
+    xaxis_title='Genre',
+    yaxis_title='Number of Titles',
+    title_x=0.5,
+    height=700,
+    width=1000
 )
 fig2.show()
 

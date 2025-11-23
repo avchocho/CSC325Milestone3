@@ -66,13 +66,11 @@ fig1 = px.line(
     title='Growth of Disney Content Over Time',
     markers=True
 )
-
 fig1.update_layout(
     height=700,     
     width=1000,
     title_x=0.5      
 )
-
 fig1.show()
 
 
@@ -103,12 +101,19 @@ fig2.update_layout(
 )
 fig2.show()
 
-# 3. Histogram: Life Expectancy Distribution
-fig3 = px.histogram(
-    df,
-    x='LifeExpectancy',
-    nbins=20,
-    title='Life Expectancy Distribution',
-    color='Continent'
+# 3. Pie Chart: Movies vs TV Shows 
+fig3 = px.pie(
+    df3,
+    names='Type',
+    values='Total',
+    title='Movies vs TV Shows on Disney+'
+)
+fig3.update_layout(
+    title_x=0.5,
+    height=600
 )
 fig3.show()
+
+# 4. Horizontal Bar Chart: Title Content From Each Country
+
+# 5. Bar Chart: Top 10 Directors 

@@ -23,7 +23,7 @@ def make_connection():
 # -----------------------------
 conn = make_connection()
 
-# V2 line chart 
+# V1 line chart 
 query1 = """
 SELECT release_year as 'Release Year', COUNT(*) AS 'Number of Titles' 
 FROM `Show` 
@@ -51,8 +51,23 @@ GROUP BY show_type;
 df3 = pd.read_sql(query3, conn)
 
 # V4 horizontal bar chart 
+query4 = """
+SELECT cname AS Country, COUNT(*) AS 'Title Production Count'
+FROM Country
+GROUP BY cname
+ORDER BY COUNT(*) DESC;
+"""
 
 # V5 bar chart
+query5 = """
+SELECT d.dname AS Director, COUNT(*) AS 'Title Count'
+FROM ShowDirector sd
+JOIN Director d on sd.director_id = d.director_id
+JOIN `Show` s ON sd.showID = s.show_id
+GROUP BY d.director_id, d.dname
+ORDER BY COUNT(*) DESC
+LIMIT 10;
+"""
 
 # -----------------------------
 # 3. Plotly Express Charts
@@ -115,5 +130,34 @@ fig3.update_layout(
 fig3.show()
 
 # 4. Horizontal Bar Chart: Title Content From Each Country
+fig4 = px.bar(
+    df4,
+    x='Title Production Count',
+    y='Country',
+    orientation='h',
+    title='Country Production Count'
+)
+fig4.update_layout(
+    xaxis_title='Title Production Count',
+    yaxis_title='Country',
+    title_x=0.5,
+    height=700,
+    width=1000
+)
+fig4.show()
 
 # 5. Bar Chart: Top 10 Directors 
+fig5 = px.bar(
+    df5,
+    x='Director',
+    y='Title Count',
+    title='Top 10 Directors with the Most Disney Titles'
+)
+fig5.update_layout(
+    xaxis_title='Director',
+    yaxis_title='Title Count',
+    title_x=0.5,
+    height=700,
+    width=1000
+)
+fig5.show()

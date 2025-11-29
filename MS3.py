@@ -10,7 +10,7 @@ import pymysql
 # -----------------------------
 def make_connection():
     return pymysql.connect(
-        host="csc325termproject-db.cjww46guy0g5.us-east-2.rds.amazonaws.com",
+        host="database-1.cru0mko4onun.us-east-2.rds.amazonaws.com",
         port=3306,                                       # MySQL default port
         user="admin",
         password="Milestone2",

@@ -130,34 +130,50 @@ fig3.update_layout(
 fig3.show()
 
 # 4. Horizontal Bar Chart: Title Content From Each Country
+# get the top 10 countries
+top10 = df4.head(10).copy()
+
+# other countries 
+other_total = df4['Number of Titles'].sum() - top10['Number of Titles'].sum()
+top10.loc[len(top10)] = ['Other', other_total]
+
 fig4 = px.bar(
-    df4,
-    x='Title Production Count',
+    top10,
+    x='Number of Titles',
     y='Country',
     orientation='h',
-    title='Country Production Count'
+    title='How Many Titles Come From Each Country?',
 )
+
 fig4.update_layout(
-    xaxis_title='Title Production Count',
+    xaxis_title='Number of Titles',
     yaxis_title='Country',
     title_x=0.5,
-    height=700,
-    width=1000
+    height=700
 )
+
 fig4.show()
 
+
 # 5. Bar Chart: Top 10 Directors 
+# get the top 10 directors
+top10 = df5.head(10).copy()
+
 fig5 = px.bar(
     df5,
     x='Director',
-    y='Title Count',
-    title='Top 10 Directors with the Most Disney Titles'
+    y='Number of Titles',
+    title='Top 10 Directors on Disney+',
 )
+fig5.update_traces(width=0.5)
 fig5.update_layout(
     xaxis_title='Director',
-    yaxis_title='Title Count',
+    yaxis_title='Number of Titles',
     title_x=0.5,
-    height=700,
-    width=1000
+    height=600
 )
+
 fig5.show()
+
+
+
